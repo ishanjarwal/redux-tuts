@@ -56,3 +56,14 @@ store.subscribe will call only for the dispatches after its declaration
 Note : state should always be immutably changed (make a copy don't change original state)
 if states are mutable, then history can't be checked
 
+Middlewares : used between dispatch and reducer. before the dispatch is sent to the reducer, middleware can perform some actions.
+applyMiddleware() method is imported and used as a second parameter in store
+
+redux-logger is a middleware used to keep record of state changes
+install it by "npm install redux-logger" and default import it
+use it as applyMiddleware(logger);
+if middleware error occurs then use applyMiddleware(logger.default)
+
+middleware breaks the process into two parts, first dispatch which is done by us is used by the middleware and a new dispatch is called by the middleware for next logic processing
+
+

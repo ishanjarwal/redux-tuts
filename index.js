@@ -1,9 +1,10 @@
-import { createStore } from 'redux'
+// use of logger middleware
 
-// creating the store
-const store = createStore(reducer);
+import { createStore, applyMiddleware } from 'redux'
+import logger from 'redux-logger'
 
-// creating the reducer 
+const store = createStore(reducer, applyMiddleware(logger.default));
+
 function reducer(state = { amount: 0 }, action) {
     switch (action.type) {
         case 'increment':
@@ -13,33 +14,8 @@ function reducer(state = { amount: 0 }, action) {
     }
 }
 
-// checking global state
-// console.log(store.getState());
 
-// creating an action
 const increase = { type: 'increment' }
-
-// sending action to store with dispatch method
-store.dispatch(increase);
-
-// rechecking global state
-// console.log(store.getState());
-
-// store.subscribe calls whenever the state changes
-// store.subscribe takes a callback
-// store.subscribe(() => {
-//     console.log(store.getState());
-// })
-// setInterval(() => {
-//     store.dispatch(increase);
-// }, 1000);
-
-// checking the history
-const history = [];
-store.subscribe(() => {
-    history.push(store.getState());
-    console.log(history);
-})
 
 setInterval(() => {
     store.dispatch(increase);
