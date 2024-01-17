@@ -63,7 +63,9 @@ redux-logger is a middleware used to keep record of state changes
 install it by "npm install redux-logger" and default import it
 use it as applyMiddleware(logger);
 if middleware error occurs then use applyMiddleware(logger.default)
-
 middleware breaks the process into two parts, first dispatch which is done by us is used by the middleware and a new dispatch is called by the middleware for next logic processing
+
+multiple actions can be created and dispatched by the use of switch case in reducer function
+
 
 
