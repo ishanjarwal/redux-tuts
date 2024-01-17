@@ -1,18 +1,24 @@
-// action creators
+// asynchronous operations and thunk
 
 import { createStore, applyMiddleware } from 'redux'
 import logger from 'redux-logger'
+import axios from 'axios'
+import { thunk } from 'redux-thunk'
 
-const store = createStore(reducer, applyMiddleware(logger.default));
-
+const init = 'init';
 const increment = 'increment';
 const decrement = 'decrement';
 const incrementByAmount = 'incrementByAmount';
 const decrementByAmount = 'decrementByAmount';
 
+const store = createStore(reducer, applyMiddleware(logger.default, thunk));
 
-function reducer(state = { amount: 0 }, action) {
+
+
+function reducer(state, action) {
     switch (action.type) {
+        case init:
+            return { amount: action.payload }
         case increment:
             return { amount: state.amount + 1 }
         case decrement:
@@ -26,12 +32,15 @@ function reducer(state = { amount: 0 }, action) {
     }
 }
 
-
+function initUser(id) {
+    return async (dispatch, getState) => {
+        const { data } = await axios.get(`http://localhost:3000/accounts/${id}`)
+        dispatch({ type: init, payload: data.amount })
+    }
+}
 function decrease() { return { type: decrement } }
 function increase() { return { type: increment } }
 function increaseByAmount(payload) { return { type: incrementByAmount, payload: payload } }
 function decreaseByAmount(payload) { return { type: decrementByAmount, payload: payload } }
 
-setInterval(() => {
-    store.dispatch(increaseByAmount(500));
-}, 3000);
+store.dispatch(initUser(3));
