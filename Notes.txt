@@ -1,3 +1,12 @@
+Redux is a pattern that has a conventional use.
+based on its pattern, many libraries exist.
+it is independant of frameworks, but its mostly used with react
+it does state management.
+
+Global State : state at the very top of heirarchy.
+Redux : helps in the access of global state
+
+
 Basic Example : 
 Let the balance in you bank account be the 'state'
 To update this balance or 'state', you need to perform an 'action'
@@ -15,9 +24,10 @@ dispatch is also in the 'Store'
 dispatch is event driven
 Note : action is not part of the store we create it according to requirements
 
-Beginning to Code : 
+Setting up the project : 
+create index.js file in the root
 run "npm init -y" to create package.json
-install react-redux library by running command "npm install --save redux"
+install redux library by running command "npm install --save redux"
 change type to module to use import statements
 
 Creating a store
