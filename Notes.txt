@@ -67,5 +67,9 @@ middleware breaks the process into two parts, first dispatch which is done by us
 
 multiple actions can be created and dispatched by the use of switch case in reducer function
 
+Action Creators : are functions that return an action object
+hence instead of passing the action as an object, these can be called inside dispatch
+
+Note : declare action types as constants so that they are hardcoded only once
 
 

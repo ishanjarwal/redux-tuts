@@ -1,19 +1,25 @@
-// multiple actions by switch case
+// action creators
 
 import { createStore, applyMiddleware } from 'redux'
 import logger from 'redux-logger'
 
 const store = createStore(reducer, applyMiddleware(logger.default));
 
+const increment = 'increment';
+const decrement = 'decrement';
+const incrementByAmount = 'incrementByAmount';
+const decrementByAmount = 'decrementByAmount';
+
+
 function reducer(state = { amount: 0 }, action) {
     switch (action.type) {
-        case 'increment':
+        case increment:
             return { amount: state.amount + 1 }
-        case 'decrement':
+        case decrement:
             return { amount: state.amount - 1 }
-        case 'incrementByAmount':
+        case incrementByAmount:
             return { amount: state.amount + action.payload }
-        case 'decrementByAmount':
+        case decrementByAmount:
             return { amount: state.amount + action.payload }
         default:
             return state;
@@ -21,11 +27,11 @@ function reducer(state = { amount: 0 }, action) {
 }
 
 
-const decrease = { type: 'decrement' }
-const increase = { type: 'increment' }
-const increaseByAmount = { type: 'incrementByAmount', payload: 100 }
-const decreaseByAmount = { type: 'decrementByAmount', payload: 100 }
+function decrease() { return { type: decrement } }
+function increase() { return { type: increment } }
+function increaseByAmount(payload) { return { type: incrementByAmount, payload: payload } }
+function decreaseByAmount(payload) { return { type: decrementByAmount, payload: payload } }
 
 setInterval(() => {
-    store.dispatch(increaseByAmount);
+    store.dispatch(increaseByAmount(500));
 }, 3000);
