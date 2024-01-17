@@ -1,0 +1,69 @@
+Basic Example : 
+Let the balance in you bank account be the 'state'
+To update this balance or 'state', you need to perform an 'action'
+Let the action performed be 'deposit' amount '100'
+here the type of action is 'deposit' and the 'payload' is 100.
+now the bank performs some logic (balance + 100) and updates the 'state'
+Similarly, other type of action can be 'withdraw' with payload say 200.
+the bank performs another logic and updates the state.
+another action can be to check the balance/state where no payload is required.
+
+Here, the bank is 'Store' which stores the logics and states
+The logic/function is called as the 'Reducer' which updates the state using previous state and action
+Now, 'action' is just an object with type and payload, to send it to the reducer we use 'dispatch' function.
+dispatch is also in the 'Store'
+dispatch is event driven
+Note : action is not part of the store we create it according to requirements
+
+Beginning to Code : 
+run "npm init -y" to create package.json
+install react-redux library by running command "npm install --save redux"
+change type to module to use import statements
+
+Creating a store
+import the function createStore from redux and create a const store
+createStore is useless unless a reducer is passed in as a parameter
+Note : createStore function is depricated instead configureStore is used
+
+Creating a reducer 
+reducer is merely a function 
+it takes two parameters in the order : state and action
+reducer (should) always returns a state.
+
+Sending an action with dispatch 
+store.dispatch({type: 'increment'})
+
+store.getState method return the global state
+
+store.subscribe(()=>{}) calls whenever state changes
+
+Note : state should always be immutably changed (make a copy don't change original state)
+
+Middlewares : used between dispatch and reducer. before the dispatch is sent to the reducer, middleware can perform some actions.
+applyMiddleware() method is imported and used as a second parameter in store
+redux-logger is a middleware used to keep record of state changes
+install it by "npm install redux-logger" and default import it
+
+Action Creators : are functions that return action object so that repeatability decreases
+
+Tip : never hardcode the type of action instead save them in constants
+
+Getting State from API call
+* use json-server for fake api
+* npm i -g json-server
+Problem : Action Creators can't be async as async functions return a promise but action creators should return the action object
+redux-thunk middleware is used to get rid of this Problem
+
+How thunk works : 
+if you want to dispatch a function call that is async,
+don't do it like : store.dispatch(initUser())
+instead send the function itself : store.dispatch(initUser);
+thunk is smart enough to understand that an async function is dispatched
+thunk will give access to two parameters inside the function initUser : dispatch and getState
+then instead of returning the action object in initUser, dispatch it.
+Hence the process gets divided into two dispatches : 1. dispatch of initUser function 2. dispatch of action object
+
+What we did was : we hardcoded the user id in the get url
+What if we want to pass id as a parameter : make getUser a normal function with parameter id
+and let getUser return the async function. then instead of passing getUser in dispatch, call it getUser()
+so that it returns the async function
