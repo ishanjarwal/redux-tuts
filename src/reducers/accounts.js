@@ -5,9 +5,9 @@ export function accountReducer(state = { amount: 0 }, action) {
         case getUserPending:
             return { ...state, pending: true }
         case getUserSuccess:
-            return { amount: action.payload }
+            return { amount: action.payload, pending: false }
         case getUserFailed:
-            return { ...state, error: action.error }
+            return { ...state, error: action.error, pending: false }
         case increment:
             return { amount: state.amount + 1 }
         case decrement:

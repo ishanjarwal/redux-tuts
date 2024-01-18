@@ -22,7 +22,7 @@ export function gettingUserSuccess(payload) { return { type: getUserSuccess, pay
 export function gettingUserFailed(error) { return { type: getUserFailed, error: error } }
 export function initUser(id) {
     return async (dispatch, getState) => {
-        const url = `http://localhost:3000/accounts/${id}`;
+        const url = `http://localhost:3000/account/${id}`;
         try {
             dispatch(gettingUserPending());
             const { data } = await axios.get(url);

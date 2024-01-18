@@ -11,3 +11,6 @@ to get a specific state from useSelector, : useSelector(state=>state.account.amo
 2. useDispatch hook : gives access to dispatch function directly
 
 most of the state management has shifted to redux files instead of react files.
+
+handling async dispatch : similar to what we made earlier, make 3 dispatches loading, success and fail
+and we can change the ui according to the response we get from the api
