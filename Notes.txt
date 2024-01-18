@@ -115,3 +115,4 @@ if a local state is changed based upon the decision of another global state, it 
 eg : increment in points only when amount is > 100
 
 In async action, there will be 3 states and 3 dispatches, pending, fullfilled and rejected
+make switch cases for all three dispatches like error for failed and pending(bool) for pending and set the amount if success
