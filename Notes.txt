@@ -2,3 +2,12 @@
 It is a library that connects states of redux with states of react.
 states in react and states in redux are completely different so it does the mapping
 it also gives some hooks to be used.
+
+react-redux gives access to a "Provider" in which the App component can be wrapped so that the global state can be accessed anywhere in the tree.
+
+1. useSelector hook : returns the Global states
+to get a specific state from useSelector, : useSelector(state=>state.account.amount)
+
+2. useDispatch hook : gives access to dispatch function directly
+
+most of the state management has shifted to redux files instead of react files.
