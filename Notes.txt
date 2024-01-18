@@ -63,7 +63,55 @@ redux-logger is a middleware used to keep record of state changes
 install it by "npm install redux-logger" and default import it
 use it as applyMiddleware(logger);
 if middleware error occurs then use applyMiddleware(logger.default)
-
 middleware breaks the process into two parts, first dispatch which is done by us is used by the middleware and a new dispatch is called by the middleware for next logic processing
 
+multiple actions can be created and dispatched by the use of switch case in reducer function
 
+Action Creators : are functions that return an action object
+hence instead of passing the action as an object, these can be called inside dispatch
+
+Note : declare action types as constants so that they are hardcoded only once
+
+Async Operations
+install json-server globally "npm i -g json-server
+create a db.json for declaration
+run "json-server db.json"
+this runs a fake api
+
+Problem : if async action creator is used, it will return promise instead of object
+hence a middleware should be applied so that it can wait for the api data and then pass a dispatch of object
+the middleware is called redux thunk
+npm install redux-thunk
+
+working of thunk
+instead of calling the action creator function, pass its definition
+like : store.dispatch(initUser) 
+this gives us access to "dispatch" and "getState" inside the function as parameters
+async function initUser(dispatch, getState) {}
+so instead of returning the state, dispatch it.
+hence the process was divided into 2 : first awaiting the data and sending the final dispatch
+
+to use variables for api calling eg accounts/2, make the async function as
+function myfun(id){
+    return async ()=>{
+        api calling
+    }
+}
+
+# Multiple Reducers
+Why can't there be a single reducer but a complex state : it will be difficult to change and access state and making copies will be wrong.
+use combineReducers() (from redux) to make multiple reducers 
+syntax : const store = createStore(
+    combineReducers({
+        accounts : accountReducer,
+        bonus : bonusReducer
+    })
+)
+
+Now the global state has become like this : {accounts: {amount:1}, bonus: {points:1}}
+but the state inside the reducer is specific
+
+if a local state is changed based upon the decision of another global state, it is called extra reducer
+eg : increment in points only when amount is > 100
+
+In async action, there will be 3 states and 3 dispatches, pending, fullfilled and rejected
