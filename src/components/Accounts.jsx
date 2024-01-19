@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { decrement, increment, incrementByAmount } from '../slices/accountSlice';
+import { decrement, increment, incrementByAmount, initUser } from '../slices/accountSlice';
 
 function Accounts() {
 
     const [value, setValue] = useState(0)
-
-    const amount = useSelector(state => state.account.amount);
+    const account = useSelector(state => state.account)
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(initUser(1));
+    }, []);
 
     return (
         <div className="card">
@@ -15,7 +18,7 @@ function Accounts() {
                 <h4>
                     <b>Account Component</b>
                 </h4>
-                <h3>Amount:${amount}</h3>
+                {account.pending ? <h3>Loading . . .</h3> : account.error ? <h3>{account.error}</h3> : <h3>Amount:${account.amount}</h3>}
                 <button onClick={() => {
                     dispatch(increment())
                 }

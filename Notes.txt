@@ -38,3 +38,18 @@ export default rewardReducer
 
 problem statement : increase bonus to 1 if amount is increase by 100 or greater
 ans : use extraReducer in the slice of bonus
+
+# async dispatches in rtk : 
+createAsyncThunk() method is imported and used
+syntax : const thunkname = createAsyncThunk(
+    'action_name',
+    async (id, thunkAPI) => {
+        call the api here
+    }
+)
+
+and then it is used as : thunkname(id);
+it automatically creates 3 sub-actions in the following way :
+thunkname.fulfilled, thunkname.pending, thunkname.rejected
+
+* async actions are added in extraReducers always.
