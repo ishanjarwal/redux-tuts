@@ -2,17 +2,18 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import { applyMiddleware, combineReducers, createStore } from 'redux'
-import { accountReducer } from './reducers/accounts.js'
-import { bonusReducer } from './reducers/bonus.js'
-import logger from 'redux-logger'
-import { thunk } from 'redux-thunk'
+import { configureStore } from '@reduxjs/toolkit'
+import accountReducer from './slices/accountSlice.js'
+import bonusReducer from './slices/bonusSlice.js'
 import { Provider } from 'react-redux'
 
-const store = createStore(combineReducers({
-  accounts: accountReducer,
-  bonus: bonusReducer
-}), applyMiddleware(logger, thunk))
+
+const store = configureStore({
+  reducer: {
+    account: accountReducer,
+    bonus: bonusReducer
+  }
+})
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

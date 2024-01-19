@@ -1,16 +1,40 @@
-# React Redux
-It is a library that connects states of redux with states of react.
-states in react and states in redux are completely different so it does the mapping
-it also gives some hooks to be used.
+# Redux Tool Kit
+in this, we create slices
+from createSlice() method
+it takes an object
+createSlice({
+    name: 'reducername',
+    initialState: initialState,
+    reducers : {
+        'action_creator' : (state, action) => {
+            state.amount += 1;
+        }
+    }
+})
 
-react-redux gives access to a "Provider" in which the App component can be wrapped so that the global state can be accessed anywhere in the tree.
+note : it looks like state is changed mutably but IMMER library automatically makes a copy
 
-1. useSelector hook : returns the Global states
-to get a specific state from useSelector, : useSelector(state=>state.account.amount)
+then in the slice file, export 2 things
+1. named export of all the action creators from slice.actions
+2. default export of reducer from slice.reducer.
 
-2. useDispatch hook : gives access to dispatch function directly
+these can be accessed in the store 
 
-most of the state management has shifted to redux files instead of react files.
+configure the store in main.jsx
 
-handling async dispatch : similar to what we made earlier, make 3 dispatches loading, success and fail
-and we can change the ui according to the response we get from the api
+The name in createSlice is important coz it decides the name of actions and states
+
+redux toolkit also provides two methods : createReducer and createAction
+In case you don't want to use slice method, you can create and export actions and reducers with these two
+syntax : 
+export const increment = createAction('reward/increment');
+const rewardReducer = createReducer(initState, (builder)=>{
+    builder
+        .addCase(increment, (state, action)=>{
+            state.points++;
+        })
+})
+export default rewardReducer
+
+problem statement : increase bonus to 1 if amount is increase by 100 or greater
+ans : use extraReducer in the slice of bonus
