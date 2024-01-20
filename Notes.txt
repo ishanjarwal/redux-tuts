@@ -53,3 +53,48 @@ it automatically creates 3 sub-actions in the following way :
 thunkname.fulfilled, thunkname.pending, thunkname.rejected
 
 * async actions are added in extraReducers always.
+
+# RTK Query : it is only for apis
+in rtk query, slice is created with createApi() method which is imported from @redux/toolkit/query/react specially for react.
+createApi takes an object : which has :
+    1. reducerPath : this is like the name of action in createSlice
+    2. baseQuery : call the fetchBaseQuery({baseURL : 'base url of api'})
+    3. endpoints that takes a builder function 
+        inside this, we can create endpoints like :
+                (builder) => ({
+                    getAcctouns: builder.query({
+                        query: () => 'accounts'
+                    })
+                })
+ Note : the api endpoint name (getAccounts) will have an auto generated hook like 'useGetAccountQuery'
+ then these hooks can be used in destructured way 
+ these have predefined consts like : data, error, isLoading
+ const {data, isLoading, error} = useGetAccountQuery()
+
+ rtk-query needs a middleware to be added in order to function
+ in the store, parallel to reducer, add : 
+ middleware: (getDefaultMiddleware) =>{
+    getDefaultMiddleware().concat(adminApi.middleware)
+ }
+
+ similarly, for requests other than get, like post, put, delete, 
+ in the endpoints, builder.mutation is used
+ which takes the query object and the query function should return an object like this :
+ {
+    url : 'account',
+    method: "POST",
+    body: {amount, id} // accessed from parameters
+ }
+
+ then this hook is used as : 
+    const [callerfunction, response] = useAddAccountMutation();
+    eg: onClick(()=>callerfunction(1, 1000))
+
+Note : providesTags is used when data is fetched
+and invalidatesTags is used when data is added
+in which tag name can be anything but should be same in both
+
+NOTE : query function takes only one parameter so if you want to send multiple paramters, then use object
+
+transformResponse : can be used for sorting
+eg : transformResponse: (response)=>response.sort((a,b)=>a.id-b.id)
