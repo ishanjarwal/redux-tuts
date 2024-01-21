@@ -1,26 +1,14 @@
-import { useSelector } from 'react-redux';
-import './App.css';
-import Account from './components/Accounts';
-import Bonus from './components/Bonus';
-import Admin from './components/Admin';
-function App() {
+import React from 'react'
+import Products from './features/products/Products'
+import Cart from './features/cart/Cart'
 
-
-  const amount = useSelector(state => state.account.amount);
-  const points = useSelector(state => state.bonus.points);
-
-
+const App = () => {
   return (
-    <div className="App">
-      <h4>App</h4>
-      <h3>Current Amount : {amount}</h3>
-      <h3>Total Bonus Points : {points}</h3>
-
-      <Account></Account>
-      <Bonus></Bonus>
-      <Admin></Admin>
+    <div>
+      <Cart></Cart>
+      <Products></Products>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
